@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Lab 13</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+    <%= javascript_importmap_tags %>
+  </head>
+  <body>
+    <header>
+      <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+        <div class="container-fluid">
+          <%= link_to "Ticket Shop", root_path, class: "navbar-brand", style:
+          "margin-left:.5em" %>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav me-auto mb-2 mb-md-0">
+              <li class="nav-item">
+                <%= link_to "Events", events_path, class: "nav-link" %>
+              </li>
+              <!-- Orders must only be visible to logged-in customers -->
+              <% if customer_signed_in? %>
+              <li class="nav-item">
+                <%= link_to "Orders", customer_orders_path, class: "nav-link" %>
+              </li>
+              <%end %>
+            </ul>
+            <form class="d-flex" style="margin-right: 1em" role="search">
+              <input class="form-control me-2" id="search_box" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success" id="search_button" type="submit">Search</button>
+            </form>
+            <!-- The shopping cart must only be visible to signed-in customers -->
+            <% if customer_signed_in? %>
+            <span class="d-inline card p-1 shopping_cart" style="background:#efefef;">
+              <%= content_tag :a, { href: shopping_cart_path } do %> <%=image_tag("cart.svg", width: "24em") %> 
+              <span class="badge badge-danger" style="color:black;">
+              <% unless cart_item_count == 0%>
+                <%= cart_item_count %>
+              <% else %>
+                &nbsp;
+              <% end %>
+            <% end %>
+              </span>
+            <% end %>
+            </span>
+            <span class="d-inline ml-3">
+              <% if admin_signed_in? %>
+              <%=link_to "Sign out", destroy_admin_session_path, data: { turbo_method: :delete } %>
+              <% elsif !customer_signed_in? %>
+              <%=link_to "Sign in", new_customer_session_path %> | <%=link_to "Sign up", new_customer_registration_path %>
+              <% elsif customer_signed_in? %>
+              <%=link_to "Sign out", destroy_customer_session_path, data: { turbo_method: :delete } %>
+              <% end %>
+            </span>          
+        </div>
+      </div>
+    </nav>
+  </header>
+  <!-- The .container-fluid class provides a full width container, spanning the entire width of the viewport -->
+  <main class="container-fluid" style="margin-top: 4em">
+    <div class="row">
+      <aside class="col-sm-2" id="customer_info">
+        <%= render partial: "customers/customer", object: @current_customer %>
+      </aside>
+      <div class="col-sm-10" id="main_content">
+        <% if notice.present? %>
+          <div class="row ml-0 mt-3" role="alert">
+            <div id="notice" class="alert alert-success">
+              <%= notice %>
+            </div>
+          </div>
+        <% end %>
+        <% if alert.present? %>
+          <div class="row ml-0 mt-3" role="alert">
+            <div id="alert" class="alert alert-danger">
+              <%= alert %>
+            </div>
+          </div>
+        <% end %>
+        <%= yield %>
+      </div>
+    </div>
+  </main>
+  <footer class="container-fluid text-muted">
+    <div class="row mt-4">
+      <p>
+        WebTech Lab 13 Starter Code is distributed under the
+        <a href="https://opensource.org/licenses/MIT">MIT license.</a><br />
+         New to Bootstrap?
+        <a href="http://getbootstrap.com/">Visit the homepage</a> or read our
+        <a href="http://getbootstrap.com/docs/5.1/getting-started/introduction/">getting started guide</a
+          >.<br />
+        Contact us at: help@ticketshop.com
+      </p>
+    </div>
+  </footer>
+</body>
+</html>

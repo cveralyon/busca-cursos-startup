@@ -1,21 +1,53 @@
-version: "3.9"
-services:
-  # db:
-  #   image: postgres
-  #   volumes:
-  #     - ./tmp/db:/var/lib/postgresql/data
-  #   environment:
-  #     POSTGRES_PASSWORD: password
+version: '3.3'
+volumes:
+  postgres_data: {}
+  asset_data: {}
 
-  web:
-    # Cambiar puerto a 8080 para correr local, así no topa con vue
-    build: .
-    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 8080 -b '0.0.0.0'"
+services:
+  app:
+    restart: always
+    environment:
+      RAILS_SERVE_STATIC_FILES: 'true'
+      RAILS_LOG_TO_STDOUT: 'true'
+    build:
+      context: .
+      dockerfile: ./docker/app/DockerFile
     volumes:
-      - .:/busca-cursos-startup
+      - type: volume
+        source: asset_data
+        target: /var/www/test_app/public/assets
+    secrets:
+      - db_username
+      - db_password
+    depends_on:
+      - db
+  db:
+    restart: always
+    environment:
+# From https://hub.docker.com/_/postgres | Docker Secrets:
+      POSTGRES_USER_FILE: /run/secrets/db_username
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    secrets:
+      - db_username
+      - db_password
+  web:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./docker/web/DockerFile
+    volumes:
+      - type: volume
+        source: asset_data
+        target: /usr/share/nginx/html/assets      
+    depends_on:
+      - app
     ports:
-      - "8080:8080"
-    # depends_on:
-    #   - db
-    env_file:
-      - ./.env
+      - 8080:80
+secrets:
+    db_password:
+      file: ./secrets/database_password.txt
+    db_username:
+      file: ./secrets/database_username.txt
