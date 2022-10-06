@@ -21,4 +21,12 @@ Things you may want to cover:
 
 * Deployment instructions
 
-* ...
+	Para correr el proyecto se debe hacer:
+	* docker-compose build
+	* docker-compose up
+	
+	Se estuvo intentando conectar el docker con kubernetes, sin embargo no logramos por varios errores como por ejemplo, de configuración de computadora ya que mostraba que no se podia acceder al localhost:8080
+
+* Jira
+
+	Se hizo cambio de panel de Jira, ya se le envio el link de invitación se llama BuscaClase, si necesita enviar correo a mdtorres1@miuandes.cl para enviarle de nuevo la invitación.
