@@ -7,7 +7,7 @@ services:
   #   environment:
   #     POSTGRES_PASSWORD: password
 
-  web:
+  web-first:
     # Cambiar puerto a 8080 para correr local, así no topa con vue
     build: .
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 8080 -b '0.0.0.0'"
@@ -17,5 +17,15 @@ services:
       - "8080:8080"
     # depends_on:
     #   - db
-    env_file:
-      - ./.env
+    # env_file:
+    #   - ./.env	
+
+  nginx:
+     build:
+       context: .
+       dockerfile: ./nginx.Dockerfile
+     ports:
+       - "80:80"
+     depends_on:
+       - web-first
+   
