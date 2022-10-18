@@ -1,4 +1,6 @@
 version: "3"
+
+
 services:
   # db:
   #   image: postgres
@@ -9,16 +11,18 @@ services:
 
   web-first:
     # Cambiar puerto a 8080 para correr local, así no topa con vue
-    build: .
+    build:
+      context: .
+      dockerfile: Dockerfile
     command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -p 8080 -b '0.0.0.0'"
     volumes:
       - .:/busca-cursos-startup
     ports:
-      - "8080:8080"
+      - "3000:3000"
     # depends_on:
     #   - db
-    # env_file:
-    #   - ./.env	
+    env_file:
+       - .env	
 
   nginx:
      build:
