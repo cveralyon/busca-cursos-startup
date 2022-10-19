@@ -33,3 +33,12 @@ https://github.com/opensearch-project/opensearch-ruby
 1) aqui está la gema
 2) hay que instalarla o local o por dockers, de ninguna manera pude porque tuve problemas con ruby en local, y con dockers no se como 
 hacerlo correr, lo puse en RUN gem install .... pero no me lo tomó en los logs  
+
+
+
+To RUN LOCALLY:
+1)  bundle install
+2)  rails db:drop
+3)  rails db:migrate
+4)  rails db:seed
+5)  rails s

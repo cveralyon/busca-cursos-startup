@@ -16,7 +16,7 @@ gem "sqlite3", "~> 1.4"
 # Use the Puma web server [https://github.com/puma/puma]
 gem "puma", "~> 5.0"
 
-# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails]
+# Use JavaScript with ESM import maps [https://github.com/rails/importmap-rails
 gem "importmap-rails"
 
 # Hotwire's SPA-like page accelerator [https://turbo.hotwired.dev]
@@ -42,6 +42,9 @@ gem "tzinfo-data", platforms: %i[ mingw mswin x64_mingw jruby ]
 
 # Reduces boot times through caching; required in config/boot.rb
 gem "bootsnap", require: false
+
+# Open search ruby
+gem 'opensearch-ruby', '~> 2.0', '>= 2.0.3'
 
 # Use Sass to process CSS
 #gem "sassc-rails"
