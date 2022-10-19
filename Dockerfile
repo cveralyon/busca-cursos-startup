@@ -1,4 +1,7 @@
-FROM ruby:3.1.1
+FROM opensearchproject/opensearch-dashboards:latest
+RUN /usr/share/opensearch-dashboards/bin/opensearch-dashboards-plugin remove securityDashboards
+COPY --chown=opensearch-dashboards:opensearch-dashboards opensearch_dashboards.yml /usr/share/opensearch-dashboards/config/
+FROM ruby:3.1.1 
 # RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
 RUN gem update && gem install rails && gem install bundler 
 #RUN gem install opensearch-ruby
