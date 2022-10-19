@@ -1,0 +1,20 @@
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: busca-cursos-startup-deployment
+spec:
+  replicas: 4
+  selector:
+    matchLabels:
+      app: busca-cursos-startup
+  template:
+    metadata:
+      labels:
+        app: busca-cursos-startup
+    spec:
+      containers:
+      - name: busca-cursos-startup
+        image: buscador/cursosapp:latest
+        ports:
+        - containerPort: 3000

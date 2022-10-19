@@ -22,14 +22,14 @@ services:
     # depends_on:
     #   - db
     env_file:
-       - .env	
+        - .env	
 
   nginx:
-     build:
-       context: .
-       dockerfile: ./nginx.Dockerfile
-     ports:
-       - "83:83"
-     depends_on:
-       - web-first
-   
+      build:
+        context: .
+        dockerfile: ./nginx.Dockerfile
+      ports:
+      - "83:83"
+      depends_on:
+        - web-first
+  
