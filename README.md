@@ -8,3 +8,5 @@
   * kubectl delete pod <name-pod>
   * kubectl delete deployment <name-deploy> -> elimina completamente el contenedor de kuber
   * kubectl describe pod <name-pod>
+  * test OpenSearch
+  
