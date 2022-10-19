@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert
+    kompose.version: 1.26.0 (40646f47)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: web-first
+  name: web-first
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: web-first
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert
+        kompose.version: 1.26.0 (40646f47)
+      creationTimestamp: null
+      labels:
+        io.kompose.service: web-first
+    spec:
+      containers:
+        - args:
+            - bash
+            - -c
+            - rm -f tmp/pids/server.pid && bundle exec rails s -p 8080 -b '0.0.0.0'
+          image: marianatr/busca-cursos-startup-web-first-1
+          name: web-first
+          ports:
+            - containerPort: 8080
+          resources: {}
+          volumeMounts:
+            - mountPath: /busca-cursos-startup
+              name: web-first-claim0
+      restartPolicy: Always
+      volumes:
+        - name: web-first-claim0
+          persistentVolumeClaim:
+            claimName: web-first-claim0
+status: {}

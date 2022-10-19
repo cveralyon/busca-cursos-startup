@@ -1,5 +1,6 @@
 FROM ruby:3.1.1
 # RUN apt-get update -qq && apt-get install -y nodejs postgresql-client
+RUN gem update && gem install rails && gem install bundler
 RUN mkdir /busca-cursos-startup
 WORKDIR /busca-cursos-startup
 COPY Gemfile /busca-cursos-startup/Gemfile
